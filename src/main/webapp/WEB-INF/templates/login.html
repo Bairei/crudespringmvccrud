@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+      <th:block th:include="headerinc :: head"></th:block>
+	  <title>Login SpringMVClinic</title>
+  </head>
+  <body onload='document.f.username.focus();'>
+   <div class="container">
+	   <th:block th:include="header :: header"></th:block>
+		<div class = "jumbotron">
+			<div id="container">
+                <p class="lead">Login</p>
+				<form class="form-vertical" name='f' th:action='@{/login}' method='POST'>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Name:</label>
+                        <div class="col-sm-4"><input class="form-control" type='text' name='username' value='' /></div>
+                        <br><br>
+                        <label class="col-sm-2 control-label">Password:</label>
+                        <div class="col-sm-4"><input class="form-control" type='password' name='password'/></div>
+                        <br><br><br>
+                        <input class="btn btn-lg right-block" name="submit" type="submit" value="Log in"/>
+					</div>
+				</form>
+			</div>
+		</div>
+   </div>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Patients SpringMVClinic</title>
+        <th:block th:include="headerinc :: head"></th:block>
+    </head>
+    <body>
+        <div class="container">
+            <th:block th:include="header :: header"></th:block>
+            <div class="jumbotron">
+                <p class="lead">Patient list</p>
+                <div  th:if="${not #lists.isEmpty(patients)}">
+                    <table class="table table-bordered table-striped table-hover table-sm">
+                        <thead class="table-inverse">
+                            <tr>
+                                <th>Id</th>
+                                <th>Patient's name</th>
+                                <th>Patient's surname</th>
+                                <th>Email</th>
+                                <th >View</th>
+                                <div sec:authorize="isAuthenticated()">
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="patient : ${patients}">
+                                <td th:text="${patient.id}"><a href="/patient/${patient.id}">Id</a></td>
+                                <td th:text="${patient.name}">Patient's name</td>
+                                <td th:text="${patient.surname}">Patient's surname</td>
+                                <td th:text="${patient.email}">Email</td>
+                                <td><a th:href="${'/patient/' + patient.id}">View</a></td>
+                                <div sec:authorize="isAuthenticated()">
+                                    <td><a th:href="${'/patient/edit/' + patient.id}">Edit</a></td>
+                                    <td><form th:object="${patient}" th:action="@{/patient/delete/{id}(id=${patient.id})}" th:method="delete"><input type="submit" value="Delete" onclick="return confirm('Are you sure?')"></form></td>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

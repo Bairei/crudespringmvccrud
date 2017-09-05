@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+
+    <title>Patient Details SpringMVClinic</title>
+
+    <th:block th:include="headerinc :: head"></th:block>
+</head>
+<body>
+<div class="container">
+    <th:block th:include="header :: header"></th:block>
+    <div class="jumbotron">
+        <p class="lead">Patient details</p>
+        <form class="form-horizontal" th:action="@{/}" method="post">
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Patient Id:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${patient.id}">Patient Id</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Name:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${patient.name}">name</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Surname:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${patient.surname}">surname</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Email:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${patient.email}">email</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+</body>
+</html>

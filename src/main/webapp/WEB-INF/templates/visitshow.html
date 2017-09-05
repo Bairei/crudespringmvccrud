@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+
+    <title>Visit Details SpringMVClinic</title>
+
+    <th:block th:include="headerinc :: head"></th:block>
+</head>
+<body>
+<div class="container">
+    <th:block th:include="header :: header"></th:block>
+
+    <div class="jumbotron">
+        <p class="lead">Visit:</p>
+        <form class="form-horizontal" th:action="@{/}">
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Visit Id:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${visit.id}">Patient Id</p></div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Doctor's Name:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${visit.doctor.name}">doctor's name</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Doctor's Surname:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${visit.doctor.surname}">doctor's surname</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Patient's name:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${visit.patient.name}">patient's name</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Patient's Surname:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${visit.patient.surname}">patient's surname</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Consulting room:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static"  th:text="${visit.consultingRoom}">consulting room</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Date of visit:</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" th:text="${#dates.format(visit.date,'yyyy-MM-dd HH:mm')}">date</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

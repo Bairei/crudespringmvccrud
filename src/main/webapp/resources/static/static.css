@@ -1,0 +1,15 @@
+.intro-text {
+    font-family: Roboto, serif;
+}
+
+/*.jumbotron {
+    margin-top: 7%;
+}*/
+
+.jumbotron {
+    top: 40px;
+    /*left: auto;
+    right: auto;
+    bottom: auto; */
+    position: relative;
+}
