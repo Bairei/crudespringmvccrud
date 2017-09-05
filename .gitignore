@@ -4,4 +4,4 @@ target
 *.iml
 .project
 .classpath
-src/main/resources
+src/main/resources/mail.properties
