@@ -12,7 +12,7 @@
             <div class="collapse navbar-collapse" id="navbarsdrop">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Patients<span class="caret"></span></a>
+                        <a href="#" class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')">Patients<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <a href="#" class="dropdown-item"  th:href="@{/patients}">Patients' list</a>
                             <a href="#" class="dropdown-item"  th:href="@{/patient/new}">Create Patient</a>
@@ -22,7 +22,7 @@
                         <a href="#" class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="dropdown02">
                             <a href="#" class="dropdown-item" th:href="@{/doctors}">Doctors list</a>
-                            <a href="#" class="dropdown-item" th:href="@{/doctor/new}">Create a doctor</a>
+                            <a href="#" class="dropdown-item" sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" th:href="@{/doctor/new}">Create a doctor</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -31,6 +31,11 @@
                             <a href="#" class="dropdown-item" th:href="@{/visits}">Visits' list</a>
                             <a href="#" class="dropdown-item" th:href="@{/visit/new}">Create a visit</a>
                         </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li sec:authorize="isAnonymous()" class="nav-item">
+                        <a th:href="@{/register}" class="nav-link">Register</a>
                     </li>
                 </ul>
                 <div class="form-inline">
@@ -45,3 +50,4 @@
     </div>
 </body>
 </html>
+<!--th:if="${#authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal,'ADMIN')}"-->

@@ -1,9 +1,10 @@
 package com.bairei.repositories;
 
-import com.bairei.domain.Patient;
+import com.bairei.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PatientRepository extends JpaRepository<Patient,Integer> {
+public interface RoleRepository extends JpaRepository<Role,Integer> {
+    Role findByName(String role);
 }

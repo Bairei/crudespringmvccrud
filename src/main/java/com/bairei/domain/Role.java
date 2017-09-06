@@ -4,17 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.io.Serializable;
 
 @Entity
-public class Doctor implements Serializable{
+public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    private String surname;
-
-    public Doctor(){}
 
     public Integer getId() {
         return id;
@@ -28,15 +24,15 @@ public class Doctor implements Serializable{
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String role) {
+        this.name = role;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

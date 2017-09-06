@@ -1,5 +1,6 @@
 package com.bairei.services;
 
+import com.bairei.domain.User;
 import com.bairei.domain.Visit;
 import com.bairei.repositories.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class VisitServiceImpl implements VisitService {
             Long date = new Date().getTime();
             Long timeDifference = (visit.getDate().getTime()) - date;
             log.info(timeDifference.toString());
-            if (timeDifference <= 24*3600*1000 && timeDifference > 0) {
+            if (timeDifference <= 24*3600*1000 && timeDifference > 0 && (visit.getPatient().getEmail() != null && !visit.getPatient().getEmail().equals(""))) {
                 mailingService.sendSimpleMessage("baireikawagishi@gmail.com",
                         "Reminder about your visit on " + visit.getDate() + " with doctor "
                                 + visit.getDoctor().getName() + " " + visit.getDoctor().getSurname(),
@@ -46,7 +47,7 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public Visit save(Visit visit) {
         Visit result = visitRepository.save(visit);
-        if (result != null) {
+        if (result != null && result.getPatient().getEmail() != null && !result.getPatient().getEmail().equals("")) {
             mailingService.sendSimpleMessage("baireikawagishi@gmail.com", "new visit scheduled on "
                             + visit.getDate(), "You have been successfully scheduled on meeting with doctor "
                             + visit.getDoctor().getName() + " " + visit.getDoctor().getSurname() + " on " + visit.getDate() + ", in room no. " + visit.getConsultingRoom());
@@ -67,5 +68,10 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public void delete(Integer id) {
         visitRepository.delete(id);
+    }
+
+    @Override
+    public List<Visit> findAllByPatient(User patient) {
+        return visitRepository.findAllByPatient(patient);
     }
 }

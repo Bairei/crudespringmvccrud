@@ -17,10 +17,10 @@ public class Visit {
     private Date date;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Doctor doctor;
+    private User doctor;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Patient patient;
+    private User patient;
     @Pattern(regexp = "^[1-9]$|^1[0-9]$|^20$", message = "You must enter valid room number in range of 1-20")
     private String consultingRoom;
 
@@ -50,19 +50,19 @@ public class Visit {
         this.consultingRoom = consultingRoom;
     }
 
-    public Doctor getDoctor() {
+    public User getDoctor() {
         return doctor;
     }
 
-    public void setDoctor(Doctor doctor) {
+    public void setDoctor(User doctor) {
         this.doctor = doctor;
     }
 
-    public Patient getPatient() {
+    public User getPatient() {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(User patient) {
         this.patient = patient;
     }
 }
