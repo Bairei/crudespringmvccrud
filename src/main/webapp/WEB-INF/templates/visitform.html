@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <title>Visit Form SpringMVClinic</title>
-
     <th:block th:include="headerinc :: head"></th:block>
-
 </head>
 <body>
 <div class="container">
     <th:block th:include="header :: header"></th:block>
-
-
     <div class="jumbotron">
         <form class="form-horizontal" th:object="${visit}" th:action="@{/visit}" th:method="${method}">
             <ul class="list-form"><li class="list-group-item list-group-item-danger" th:each="err : ${#fields.errors('*')}" th:text="${err}">Error in form</li></ul>
@@ -52,7 +47,6 @@
         </form>
     </div>
 </div>
-
 <script>
     function ISODateString(d) {
         function pad(n) {return n<10 ? '0'+n : n}
@@ -62,7 +56,6 @@
             + pad(d.getHours())+':'
             + pad(d.getMinutes())
     }
-
     $(document).ready(function () {
         if ($("#date-picker").val()=='') {
             $("#date-picker").val(ISODateString(new Date()));

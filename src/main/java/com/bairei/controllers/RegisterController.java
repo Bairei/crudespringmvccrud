@@ -1,6 +1,7 @@
 package com.bairei.controllers;
 
 import com.bairei.domain.User;
+import com.bairei.services.LoginService;
 import com.bairei.services.RoleService;
 import com.bairei.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class RegisterController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private LoginService loginService;
+
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String userForm(Model model){
         model.addAttribute("user", new User());
@@ -36,11 +40,13 @@ public class RegisterController {
         if (user.getSecret().equals("superacc")){
             user.setRoles(roleService.createAdminRole());
         } else user.setRoles(roleService.createUserRole());
+        String plain = user.getPassword();
         try {
             userService.save(user);
         } catch (Exception e) {
             return "userform";
         }
+        loginService.autoLogin(user.getEmail(),plain);
         return "redirect:/";
     }
 }

@@ -1,53 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head lang="en">
-</head>
-<body>
-    <div th:fragment="header">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsdrop" aria-controls="navbarsdrop" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarsdrop">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')">Patients<span class="caret"></span></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a href="#" class="dropdown-item"  th:href="@{/patients}">Patients' list</a>
-                            <a href="#" class="dropdown-item"  th:href="@{/patient/new}">Create Patient</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors<span class="caret"></span></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown02">
-                            <a href="#" class="dropdown-item" th:href="@{/doctors}">Doctors list</a>
-                            <a href="#" class="dropdown-item" sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" th:href="@{/doctor/new}">Create a doctor</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visits<span class="caret"></span></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown03">
-                            <a href="#" class="dropdown-item" th:href="@{/visits}">Visits' list</a>
-                            <a href="#" class="dropdown-item" th:href="@{/visit/new}">Create a visit</a>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li sec:authorize="isAnonymous()" class="nav-item">
-                        <a th:href="@{/register}" class="nav-link">Register</a>
-                    </li>
-                </ul>
-                <div class="form-inline">
-                <form class="form-inline my-2 my-lg-0" sec:authorize="isAnonymous()" action="/login" th:action="@{/login}"><input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="Sign in"></form>
-                <div class="intro-text" sec:authorize="isAuthenticated()" id="welcome">
-                    <a class="navbar-brand text-white">Welcome, <span sec:authentication="name">user-name</span>!</a>
+    <head lang="en">
+    </head>
+    <body>
+        <div th:fragment="header">
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+                <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsdrop" aria-controls="navbarsdrop" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarsdrop">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')">Patients<span class="caret"></span></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a href="#" class="dropdown-item"  th:href="@{/patients}">Patients' list</a>
+                                <a href="#" class="dropdown-item"  th:href="@{/patient/new}">Create Patient</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors<span class="caret"></span></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                <a href="#" class="dropdown-item" th:href="@{/doctors}">Doctors list</a>
+                                <a href="#" class="dropdown-item" sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" th:href="@{/doctor/new}">Create a doctor</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visits<span class="caret"></span></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown03">
+                                <a href="#" class="dropdown-item" th:href="@{/visits}">Visits' list</a>
+                                <a href="#" class="dropdown-item" th:href="@{/visit/new}">Create a visit</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li sec:authorize="isAnonymous()" class="nav-item">
+                            <a th:href="@{/register}" class="nav-link">Register</a>
+                        </li>
+                    </ul>
+                    <div class="form-inline">
+                    <form class="form-inline my-2 my-lg-0" sec:authorize="isAnonymous()" action="/login" th:action="@{/login}"><input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="Sign in"></form>
+                    <div class="intro-text" sec:authorize="isAuthenticated()" id="welcome">
+                        <a class="navbar-brand text-white">Welcome, <span sec:authentication="name">user-name</span>!</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()"><form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post"><input class="btn btn-primary my-2 my-lg-0" type="submit" value="Logout"/></form></div>
+                    </div>
                 </div>
-                <div sec:authorize="isAuthenticated()"><form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post"><input class="btn btn-primary my-2 my-lg-0" type="submit" value="Logout"/></form></div>
-                </div>
-            </div>
-        </nav>
-    </div>
-</body>
+            </nav>
+        </div>
+    </body>
 </html>
-<!--th:if="${#authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal,'ADMIN')}"-->

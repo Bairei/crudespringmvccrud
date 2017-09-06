@@ -79,7 +79,7 @@ public class DoctorAndUserLoader implements SmartInitializingSingleton {
             e.printStackTrace();
         }
         log.info("Saved user - id " + user.getId());
-        log.info(userService.findAll().toString());
+//        log.info(userService.findAll().toString());
 
     }
 }

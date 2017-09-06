@@ -74,6 +74,7 @@ public class VisitController {
     public String saveVisit(@ModelAttribute("visit") @Validated Visit visit, BindingResult result,
                             Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        validator.validate(visit,result);
         if(result.hasErrors()){
             model.addAttribute("method","post");
             model.addAttribute("doctors", userService.findUsersByRolesContaining(roleService.getAdminRole()));
@@ -93,6 +94,7 @@ public class VisitController {
     public String updateVisit(@ModelAttribute("visit") @Validated Visit visit, BindingResult result,
                               Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        validator.validate(visit,result);
         if(result.hasErrors()){
             model.addAttribute("method","patch");
             model.addAttribute("doctors", userService.findUsersByRolesContaining(roleService.getAdminRole()));

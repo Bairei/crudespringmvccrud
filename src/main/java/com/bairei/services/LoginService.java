@@ -1,5 +1,6 @@
 package com.bairei.services;
 
 public interface LoginService {
-    void autoLogin(String email, String password);
+    void autoLogin(String username, String password);
+    String findLoggedInUsername();
 }

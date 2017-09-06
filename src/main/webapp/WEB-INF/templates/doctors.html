@@ -18,7 +18,7 @@
                                 <th>Doctor's surname</th>
                                 <th>Email</th>
                                 <th>View</th>
-                                <div sec:authorize="isAuthenticated()">
+                                <div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')">
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </div>

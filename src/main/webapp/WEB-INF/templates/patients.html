@@ -19,7 +19,6 @@
                                 <th>Email</th>
                                 <th >View</th>
                                 <div sec:authorize="isAuthenticated()">
-                                    <!--<th>Edit</th>-->
                                     <th>Delete</th>
                                 </div>
                             </tr>
@@ -32,7 +31,6 @@
                                 <td th:text="${patient.email}">Email</td>
                                 <td><a th:href="${'/patient/' + patient.id}">View</a></td>
                                 <div sec:authorize="isAuthenticated()">
-                                    <!--<td><a th:href="${'/patient/edit/' + patient.id}">Edit</a></td>-->
                                     <td><form th:object="${patient}" th:action="@{/patient/delete/{id}(id=${patient.id})}" th:method="delete"><input type="submit" value="Delete" onclick="return confirm('Are you sure?')"></form></td>
                                 </div>
                             </tr>

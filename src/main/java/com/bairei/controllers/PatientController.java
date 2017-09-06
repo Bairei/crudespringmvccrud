@@ -53,6 +53,7 @@ public class PatientController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping (value = "patient", method = RequestMethod.POST)
     public String savePatient(@ModelAttribute(name = "patient") @Validated User patient, BindingResult result, Model model){
+        validator.validate(patient,result);
         if (result.hasErrors()){
             model.addAttribute("method", "post");
             return "patientform";

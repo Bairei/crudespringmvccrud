@@ -34,7 +34,7 @@ public class MailingServiceImpl implements  MailingService{
             message.setSubject(subject);
             message.setText(text);
             mailSender.send(message);
-            log.info("Email to" + message.getTo()[0] + " has been sent.");
+            log.info("Email to " + message.getTo()[0] + " has been sent.");
         } catch (MailException e) {
             log.severe("Unable to send an email message!\n" + e.toString());
         }

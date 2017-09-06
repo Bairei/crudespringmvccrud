@@ -44,10 +44,15 @@ public class VisitValidator implements Validator {
         }
 
         for (Visit v: visitService.findAll()) {
-            System.out.println((Math.abs(v.getDate().getTime()-visit.getDate().getTime())));
             if((v.getDoctor().getId().equals(visit.getDoctor().getId()) || v.getPatient().getId().equals(visit.getPatient().getId()) || v.getConsultingRoom().equals(visit.getConsultingRoom())
             ) && (Math.abs(v.getDate().getTime()-visit.getDate().getTime())<1000*60*30) && !(v.getId().equals(visit.getId()))){
                 errors.rejectValue("date", "NotInterfere.visitForm.date","Your date cannot interfere within 30 minutes from an another one! (Either doctor's, patient's or this room's)");
+            }
+            if(v.getDoctor().getId().equals(visit.getDoctor().getId())
+                    && v.getPatient().getId().equals(visit.getPatient().getId())
+                    && v.getDate().equals(visit.getDate()) && !v.getId().equals(visit.getId())){
+                errors.rejectValue("date","Unique.visitForm.date","You cannot create a new visit with the same patient and doctor on the same date" +
+                        "as the other one in database!");
             }
         }
 

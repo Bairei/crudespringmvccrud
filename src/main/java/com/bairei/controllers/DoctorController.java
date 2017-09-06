@@ -58,6 +58,7 @@ public class DoctorController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping (value = "/doctor", method = RequestMethod.POST)
     public String saveDoctor(@ModelAttribute(name = "doctor") @Validated User doctor, BindingResult result, Model model){
+        validator.validate(doctor,result);
         if(result.hasErrors()){
             model.addAttribute("method", "post");
             return "doctorform";
@@ -76,6 +77,7 @@ public class DoctorController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping (value = "/doctor", method = RequestMethod.PATCH)
     public String updateDoctor(@ModelAttribute(name = "doctor") @Validated User doctor, BindingResult result, Model model){
+        validator.validate(doctor,result);
         if(result.hasErrors()){
             model.addAttribute("method","patch");
             return "doctorform";
