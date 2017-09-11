@@ -27,6 +27,7 @@ public class DoctorController {
 
     private final static Logger log = Logger.getLogger(DoctorController.class.toString());
 
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -35,10 +36,7 @@ public class DoctorController {
     @Autowired
     private DoctorValidator validator;
 
-    @Autowired
-    public void setUserRepository(UserService userService){ this.userService = userService; }
-
-    @InitBinder
+    @InitBinder ("doctor")
     protected void InitBinder(WebDataBinder binder) { binder.setValidator(validator); }
 
     @RequestMapping(value = "/doctors",method = RequestMethod.GET)
@@ -129,5 +127,4 @@ public class DoctorController {
             return "redirect:/doctors";
         }
     }
-
 }

@@ -56,6 +56,11 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
+    public Visit saveOrUpdate(Visit visit) {
+        return visitRepository.save(visit);
+    }
+
+    @Override
     public List<Visit> findAll() {
         return visitRepository.findAll();
     }

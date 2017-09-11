@@ -8,6 +8,7 @@ import java.util.List;
 public interface VisitService {
     void appointmentReminder();
     Visit save(Visit visit);
+    Visit saveOrUpdate(Visit visit);
     List<Visit> findAll();
     Visit findOne(Integer id);
     void delete(Integer id);

@@ -38,10 +38,10 @@ public class VisitController {
     @Autowired
     private VisitValidator validator;
 
-//    @InitBinder
-//    protected void initBinder(WebDataBinder binder){
-//        binder.setValidator(validator);
-//    }
+    @InitBinder("visit")
+    protected void initBinder(WebDataBinder binder){
+        binder.setValidator(validator);
+    }
 
     @RequestMapping(value = "/visits",method = RequestMethod.GET)
     public String list(Model model){
@@ -62,7 +62,7 @@ public class VisitController {
         model.addAttribute("visit", new Visit());
         model.addAttribute("doctors", userService.findUsersByRolesContaining(roleService.getAdminRole()));
         if(Arrays.toString(auth.getAuthorities().toArray()).contains("ROLE_ADMIN")) {
-            model.addAttribute("patients", userService.findAll());
+            model.addAttribute("patients", userService.findUsersByRolesContaining(roleService.getUserRole()));
             return "visitform";
         }
         model.addAttribute("patients", userService.findUserByEmail(auth.getName()));
@@ -79,7 +79,7 @@ public class VisitController {
             model.addAttribute("method","post");
             model.addAttribute("doctors", userService.findUsersByRolesContaining(roleService.getAdminRole()));
             if(Arrays.toString(auth.getAuthorities().toArray()).contains("ROLE_ADMIN")) {
-                model.addAttribute("patients", userService.findAll());
+                model.addAttribute("patients", userService.findUsersByRolesContaining(roleService.getUserRole()));
                 return "visitform";
             }
             model.addAttribute("patients", userService.findUserByEmail(auth.getName()));
@@ -99,13 +99,13 @@ public class VisitController {
             model.addAttribute("method","patch");
             model.addAttribute("doctors", userService.findUsersByRolesContaining(roleService.getAdminRole()));
             if(Arrays.toString(auth.getAuthorities().toArray()).contains("ROLE_ADMIN")) {
-                model.addAttribute("patients", userService.findAll());
+                model.addAttribute("patients", userService.findUsersByRolesContaining(roleService.getUserRole()));
                 return "visitform";
             }
             model.addAttribute("patients", userService.findUserByEmail(auth.getName()));
             return "visitform";
         }
-        visitService.save(visit);
+        visitService.saveOrUpdate(visit);
         return "redirect:/visit/" + visit.getId();
     }
 
@@ -133,7 +133,7 @@ public class VisitController {
             model.addAttribute("visit", visit);
             model.addAttribute("doctors", userService.findUsersByRolesContaining(roleService.getAdminRole()));
             if(Arrays.toString(auth.getAuthorities().toArray()).contains("ROLE_ADMIN")) {
-                model.addAttribute("patients", userService.findAll());
+                model.addAttribute("patients", userService.findUsersByRolesContaining(roleService.getUserRole()));
                 return "visitform";
             }
             model.addAttribute("patients", userService.findOne(visitService.findOne(id).getPatient().getId()));

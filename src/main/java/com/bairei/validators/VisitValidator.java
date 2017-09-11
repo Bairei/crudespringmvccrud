@@ -56,6 +56,10 @@ public class VisitValidator implements Validator {
             }
         }
 
+        if(visit.getDoctor().getId().equals(visit.getPatient().getId())){
+            errors.rejectValue("doctor","notDuplicating.visitForm.doctor", "You cannot create a visit where patient and doctor is the same person!");
+        }
+
         Pattern p = Pattern.compile("^[1-9]$|^1[0-9]$|^20$");
         Matcher m = p.matcher(visit.getConsultingRoom());
         if(!m.matches()){

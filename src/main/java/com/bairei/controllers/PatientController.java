@@ -30,7 +30,7 @@ public class PatientController {
     @Autowired
     private PatientValidator validator;
 
-    @InitBinder
+    @InitBinder("patient")
     protected void initBinder(WebDataBinder binder){
         binder.setValidator(validator);
     }
