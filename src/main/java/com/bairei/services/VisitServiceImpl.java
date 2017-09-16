@@ -35,7 +35,9 @@ public class VisitServiceImpl implements VisitService {
             Long date = new Date().getTime();
             Long timeDifference = (visit.getDate().getTime()) - date;
             log.info(timeDifference.toString());
-            if (timeDifference <= 24*3600*1000 && timeDifference > 0 && (visit.getPatient().getEmail() != null && !visit.getPatient().getEmail().equals(""))) {
+            if (timeDifference <= 24*3600*1000 && timeDifference > 0
+                    && (visit.getPatient().getEmail() != null
+                    && !visit.getPatient().getEmail().equals(""))) {
                 mailingService.sendSimpleMessage("baireikawagishi@gmail.com",
                         "Reminder about your visit on " + visit.getDate() + " with doctor "
                                 + visit.getDoctor().getName() + " " + visit.getDoctor().getSurname(),
@@ -50,7 +52,9 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public Visit save(Visit visit) {
         Visit result = visitRepository.save(visit);
-        if (result != null && result.getPatient().getEmail() != null && !result.getPatient().getEmail().equals("")) {
+        if (result != null
+                && result.getPatient().getEmail() != null
+                && !result.getPatient().getEmail().equals("")) {
             mailingService.sendSimpleMessage("baireikawagishi@gmail.com", "new visit scheduled on "
                             + visit.getDate(), "You have been successfully scheduled on meeting with doctor "
                             + visit.getDoctor().getName() + " " + visit.getDoctor().getSurname() + " on " + visit.getDate() + ", in room no. " + visit.getConsultingRoom());

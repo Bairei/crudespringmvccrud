@@ -19,7 +19,8 @@ public class LoginServiceImpl implements LoginService {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    public LoginServiceImpl(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+    public LoginServiceImpl(AuthenticationManager authenticationManager,
+                            UserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
     }
@@ -36,7 +37,8 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public void autoLogin(String username, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 

@@ -26,7 +26,8 @@ public class PatientController {
     private PatientValidator validator;
 
     @Autowired
-    public PatientController(UserService userService, RoleService roleService, PatientValidator validator) {
+    public PatientController(UserService userService, RoleService roleService,
+                             PatientValidator validator) {
         this.userService = userService;
         this.roleService = roleService;
         this.validator = validator;
@@ -54,12 +55,16 @@ public class PatientController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping (value = "patient", method = RequestMethod.POST)
-    public String savePatient(@ModelAttribute(name = "patient") @Validated User patient, BindingResult result, Model model){
+    public String savePatient(@ModelAttribute(name = "patient") @Validated User patient,
+                              BindingResult result, Model model){
         if (result.hasErrors()){
             model.addAttribute("method", "post");
             return "patientform";
         }
-        RandomStringGenerator generator = new RandomStringGenerator.Builder().withinRange('a', 'z').build();
+        RandomStringGenerator generator = new RandomStringGenerator
+                                                                .Builder()
+                                                                .withinRange('a', 'z')
+                                                                .build();
         String randomPass = generator.generate(20);
         patient.setPassword(randomPass);
         patient.setConfirmPassword(randomPass);

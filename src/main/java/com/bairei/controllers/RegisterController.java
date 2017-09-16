@@ -22,7 +22,8 @@ public class RegisterController {
     private LoginService loginService;
 
     @Autowired
-    public RegisterController(UserService userService, RoleService roleService, LoginService loginService) {
+    public RegisterController(UserService userService, RoleService roleService,
+                              LoginService loginService) {
         this.userService = userService;
         this.roleService = roleService;
         this.loginService = loginService;

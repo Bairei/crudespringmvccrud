@@ -25,7 +25,8 @@ public class DoctorAndUserLoader implements SmartInitializingSingleton {
     private VisitService visitService;
 
     @Autowired
-    public DoctorAndUserLoader(UserService userService, RoleService roleService, VisitService visitService){
+    public DoctorAndUserLoader(UserService userService, RoleService roleService,
+                               VisitService visitService){
         this.userService = userService;
         this.roleService = roleService;
         this.visitService = visitService;

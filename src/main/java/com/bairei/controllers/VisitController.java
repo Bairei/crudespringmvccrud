@@ -32,7 +32,8 @@ public class VisitController {
     private VisitValidator validator;
 
     @Autowired
-    public VisitController(VisitService visitService, UserService userService, RoleService roleService, VisitValidator validator) {
+    public VisitController(VisitService visitService, UserService userService,
+                           RoleService roleService, VisitValidator validator) {
         this.visitService = visitService;
         this.userService = userService;
         this.roleService = roleService;
@@ -127,7 +128,8 @@ public class VisitController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Visit visit = visitService.findOne(id);
         if(visit != null){
-            if(!auth.getName().equals(visit.getPatient().getEmail()) && !auth.getName().equals(visit.getDoctor().getEmail())){
+            if(!auth.getName().equals(visit.getPatient().getEmail())
+                    && !auth.getName().equals(visit.getDoctor().getEmail())){
                 return "redirect:/visits/";
             }
             model.addAttribute("method","put");
