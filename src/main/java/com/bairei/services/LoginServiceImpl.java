@@ -15,11 +15,14 @@ public class LoginServiceImpl implements LoginService {
 
     private final static Logger log = Logger.getLogger(LoginServiceImpl.class.toString());
 
-    @Autowired
     private AuthenticationManager authenticationManager;
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    public LoginServiceImpl(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     public String findLoggedInUsername() {

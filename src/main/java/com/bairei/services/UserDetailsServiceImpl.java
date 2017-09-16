@@ -22,8 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final static Logger log = Logger.getLogger(UserDetailsServiceImpl.class.toString());
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     @Transactional

@@ -11,14 +11,21 @@ import org.springframework.validation.Validator;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
 public class VisitValidator implements Validator {
 
-    @Autowired
+    private final static Logger log = Logger.getLogger(VisitValidator.class.getName());
+
     private VisitService visitService;
+
+    @Autowired
+    public VisitValidator(VisitService visitService) {
+        this.visitService = visitService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -46,13 +53,9 @@ public class VisitValidator implements Validator {
         for (Visit v: visitService.findAll()) {
             if((v.getDoctor().getId().equals(visit.getDoctor().getId()) || v.getPatient().getId().equals(visit.getPatient().getId()) || v.getConsultingRoom().equals(visit.getConsultingRoom())
             ) && (Math.abs(v.getDate().getTime()-visit.getDate().getTime())<1000*60*30) && !(v.getId().equals(visit.getId()))){
+                log.warning("???");
                 errors.rejectValue("date", "NotInterfere.visitForm.date","Your date cannot interfere within 30 minutes from an another one! (Either doctor's, patient's or this room's)");
-            }
-            if(v.getDoctor().getId().equals(visit.getDoctor().getId())
-                    && v.getPatient().getId().equals(visit.getPatient().getId())
-                    && v.getDate().equals(visit.getDate()) && !v.getId().equals(visit.getId())){
-                errors.rejectValue("date","Unique.visitForm.date","You cannot create a new visit with the same patient and doctor on the same date" +
-                        "as the other one in database!");
+                break;
             }
         }
 

@@ -10,4 +10,7 @@ public class IndexController {
     public String index(){
         return "index";
     }
+
+    @RequestMapping("/403")
+    public String forbidden() { return "403";}
 }

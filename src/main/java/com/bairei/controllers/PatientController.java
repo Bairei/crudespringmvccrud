@@ -21,14 +21,16 @@ public class PatientController {
 
     private final static Logger log = Logger.getLogger(PatientController.class.toString());
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private RoleService roleService;
+    private PatientValidator validator;
 
     @Autowired
-    private PatientValidator validator;
+    public PatientController(UserService userService, RoleService roleService, PatientValidator validator) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.validator = validator;
+    }
 
     @InitBinder("patient")
     protected void initBinder(WebDataBinder binder){
@@ -53,7 +55,6 @@ public class PatientController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping (value = "patient", method = RequestMethod.POST)
     public String savePatient(@ModelAttribute(name = "patient") @Validated User patient, BindingResult result, Model model){
-        validator.validate(patient,result);
         if (result.hasErrors()){
             model.addAttribute("method", "post");
             return "patientform";

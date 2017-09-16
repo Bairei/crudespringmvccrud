@@ -17,14 +17,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class RegisterController {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private RoleService roleService;
+    private LoginService loginService;
 
     @Autowired
-    private LoginService loginService;
+    public RegisterController(UserService userService, RoleService roleService, LoginService loginService) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.loginService = loginService;
+    }
+
+
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String userForm(Model model){

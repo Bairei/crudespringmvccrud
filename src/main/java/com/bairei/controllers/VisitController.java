@@ -26,17 +26,18 @@ public class VisitController {
 
     private final static Logger log = Logger.getLogger(VisitController.class.toString());
 
-    @Autowired
     private VisitService visitService;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private RoleService roleService;
+    private VisitValidator validator;
 
     @Autowired
-    private VisitValidator validator;
+    public VisitController(VisitService visitService, UserService userService, RoleService roleService, VisitValidator validator) {
+        this.visitService = visitService;
+        this.userService = userService;
+        this.roleService = roleService;
+        this.validator = validator;
+    }
 
     @InitBinder("visit")
     protected void initBinder(WebDataBinder binder){
@@ -74,7 +75,6 @@ public class VisitController {
     public String saveVisit(@ModelAttribute("visit") @Validated Visit visit, BindingResult result,
                             Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        validator.validate(visit,result);
         if(result.hasErrors()){
             model.addAttribute("method","post");
             model.addAttribute("doctors", userService.findUsersByRolesContaining(roleService.getAdminRole()));
@@ -90,13 +90,12 @@ public class VisitController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    @RequestMapping (value = "/visit", method = RequestMethod.PATCH)
+    @RequestMapping (value = "/visit", method = RequestMethod.PUT)
     public String updateVisit(@ModelAttribute("visit") @Validated Visit visit, BindingResult result,
                               Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        validator.validate(visit,result);
         if(result.hasErrors()){
-            model.addAttribute("method","patch");
+            model.addAttribute("method","put");
             model.addAttribute("doctors", userService.findUsersByRolesContaining(roleService.getAdminRole()));
             if(Arrays.toString(auth.getAuthorities().toArray()).contains("ROLE_ADMIN")) {
                 model.addAttribute("patients", userService.findUsersByRolesContaining(roleService.getUserRole()));
@@ -120,29 +119,33 @@ public class VisitController {
         return "redirect:/visits/";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN') " +
+            "and (authentication.name == @visitRepository.findOne(#id).doctor.email " +
+            "or authentication.name == @visitRepository.findOne(#id).patient.email)")
     @RequestMapping("/visit/edit/{id}")
     public String editVisit(@PathVariable Integer id, Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Visit visit = visitService.findOne(id);
         if(visit != null){
-            if(!auth.getName().equals(visitService.findOne(id).getPatient().getEmail()) && !auth.getName().equals(visit.getDoctor().getEmail())){
+            if(!auth.getName().equals(visit.getPatient().getEmail()) && !auth.getName().equals(visit.getDoctor().getEmail())){
                 return "redirect:/visits/";
             }
-            model.addAttribute("method","patch");
+            model.addAttribute("method","put");
             model.addAttribute("visit", visit);
             model.addAttribute("doctors", userService.findUsersByRolesContaining(roleService.getAdminRole()));
             if(Arrays.toString(auth.getAuthorities().toArray()).contains("ROLE_ADMIN")) {
                 model.addAttribute("patients", userService.findUsersByRolesContaining(roleService.getUserRole()));
                 return "visitform";
             }
-            model.addAttribute("patients", userService.findOne(visitService.findOne(id).getPatient().getId()));
+            model.addAttribute("patients", userService.findOne(visit.getPatient().getId()));
             return "visitform";
         }
         return "redirect:/visits/";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN') " +
+            "and (authentication.name == @visitRepository.findOne(#id).doctor.email " +
+            "or authentication.name == @visitRepository.findOne(#id).patient.email)")
     @RequestMapping(value = "/visit/delete/{id}", method = RequestMethod.DELETE)
     public String deleteVisit(@PathVariable Integer id){
         try {

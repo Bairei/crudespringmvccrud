@@ -24,8 +24,12 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = {"com.bairei.repositories"})
 public class HibernateConfig {
 
-    @Autowired
     private Environment env;
+
+    @Autowired
+    public HibernateConfig(Environment env){
+        this.env = env;
+    }
 
     @Bean
     JpaTransactionManager transactionManager(EntityManagerFactory emf){

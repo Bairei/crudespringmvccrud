@@ -11,8 +11,12 @@ import org.springframework.validation.Validator;
 @Component
 public class PatientValidator implements Validator {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public PatientValidator(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {

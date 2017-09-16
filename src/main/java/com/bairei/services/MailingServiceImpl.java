@@ -16,11 +16,14 @@ import java.util.logging.Logger;
 @PropertySource("classpath:mail.properties")
 public class MailingServiceImpl implements  MailingService{
 
-    @Autowired
     private MailSender mailSender;
-	
-	@Autowired
 	private Environment env;
+
+    @Autowired
+    public MailingServiceImpl(MailSender mailSender, Environment env) {
+        this.mailSender = mailSender;
+        this.env = env;
+    }
 
     private static final Logger log = Logger.getLogger(MailingServiceImpl.class.toString());
 

@@ -2,14 +2,17 @@ package com.bairei.bootstrap;
 
 import com.bairei.domain.Role;
 import com.bairei.domain.User;
+import com.bairei.domain.Visit;
 import com.bairei.repositories.RoleRepository;
 import com.bairei.repositories.UserRepository;
 import com.bairei.services.RoleService;
 import com.bairei.services.UserService;
+import com.bairei.services.VisitService;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -17,11 +20,16 @@ import java.util.logging.Logger;
 @Component
 public class DoctorAndUserLoader implements SmartInitializingSingleton {
 
-    @Autowired
     private UserService userService;
+    private RoleService roleService;
+    private VisitService visitService;
 
     @Autowired
-    private RoleService roleService;
+    public DoctorAndUserLoader(UserService userService, RoleService roleService, VisitService visitService){
+        this.userService = userService;
+        this.roleService = roleService;
+        this.visitService = visitService;
+    }
 
     private static final Logger log = Logger.getLogger(DoctorAndUserLoader.class.toString());
 
@@ -79,7 +87,13 @@ public class DoctorAndUserLoader implements SmartInitializingSingleton {
             e.printStackTrace();
         }
         log.info("Saved user - id " + user.getId());
-//        log.info(userService.findAll().toString());
+
+        Visit visit = new Visit();
+        visit.setDoctor(doctor);
+        visit.setPatient(user);
+        visit.setDate(new Date());
+        visit.setConsultingRoom("1");
+        visitService.save(visit);
 
     }
 }

@@ -27,14 +27,16 @@ public class DoctorController {
 
     private final static Logger log = Logger.getLogger(DoctorController.class.toString());
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private RoleService roleService;
+    private DoctorValidator validator;
 
     @Autowired
-    private DoctorValidator validator;
+    public DoctorController(UserService userService, RoleService roleService, DoctorValidator validator) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.validator = validator;
+    }
 
     @InitBinder ("doctor")
     protected void InitBinder(WebDataBinder binder) { binder.setValidator(validator); }
@@ -73,11 +75,11 @@ public class DoctorController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping (value = "/doctor", method = RequestMethod.PATCH)
+    @RequestMapping (value = "/doctor", method = RequestMethod.PUT)
     public String updateDoctor(@ModelAttribute(name = "doctor") @Validated User doctor, BindingResult result, Model model){
         validator.validate(doctor,result);
         if(result.hasErrors()){
-            model.addAttribute("method","patch");
+            model.addAttribute("method","put");
             return "doctorform";
         }
         doctor.setRoles(roleService.createAdminRole());
@@ -85,7 +87,7 @@ public class DoctorController {
             userService.save(doctor);
         } catch (Exception e) {
             log.warning(e.toString());
-            model.addAttribute("method","patch");
+            model.addAttribute("method","put");
             return "doctorform";
         }
         return "redirect:/doctor/" + doctor.getId();
@@ -108,7 +110,7 @@ public class DoctorController {
         User doctor = userService.findOne(id);
         if (doctor != null) {
             model.addAttribute("doctor", doctor);
-            model.addAttribute("method","patch");
+            model.addAttribute("method","put");
             return "doctorform";
         }
         return "redirect:/doctors/";
