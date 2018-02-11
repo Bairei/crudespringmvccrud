@@ -1,0 +1,12 @@
+#SMTP HOST
+mailserver.host = your.host.address.smtp.com
+#SMTP PORT
+mailserver.port = 465
+mailserver.username= yourusername
+mailserver.password = yourpassword
+#If you're using smtp protocol
+mail.smtp.auth = true
+mail.transport.protocol = smtp
+mail.smtp.starttls.enable = true
+mail.smtp.socketFactory.port = 465
+mail.smtp.socketFactory.class = javax.net.ssl.SSLSocketFactory
