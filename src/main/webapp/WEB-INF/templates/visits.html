@@ -41,7 +41,7 @@
                                 <td><a th:href="${'/visit/' + visit.id}">View</a></td>
                                 <div sec:authorize="isAuthenticated()">
                                     <td><a th:href="${'/visit/edit/' + visit.id}">Edit</a></td>
-                                    <td><form th:object="${visit}" th:action="@{/visit/delete/{id}(id=${visit.id})}" th:method="delete"><input type="submit" value="Delete" onclick="return confirm('Are you sure?')"></form></td>
+                                    <td><form th:object="${visit}" th:action="@{/visit/delete/{id}(id=${visit.id})}" th:method="delete"><input type="submit" value="Delete" onclick="return confirm('Are you sure?')"></input></form></td>
                                 </div>
                             </tr>
                         </tbody>

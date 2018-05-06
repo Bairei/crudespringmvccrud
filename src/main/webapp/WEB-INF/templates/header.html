@@ -39,11 +39,11 @@
                         </li>
                     </ul>
                     <div class="form-inline">
-                    <form class="form-inline my-2 my-lg-0" sec:authorize="isAnonymous()" action="/login" th:action="@{/login}"><input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="Sign in"></form>
+                        <form class="form-inline my-2 my-lg-0" sec:authorize="isAnonymous()" action="/login" th:action="@{/login}"><button type="submit" class="btn btn-outline-success my-2 my-sm-0">Sign in</button></form>
                     <div class="intro-text" sec:authorize="isAuthenticated()" id="welcome">
                         <a class="navbar-brand text-white">Welcome, <span sec:authentication="name">user-name</span>!</a>
                     </div>
-                    <div sec:authorize="isAuthenticated()"><form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post"><input class="btn btn-primary my-2 my-lg-0" type="submit" value="Logout"/></form></div>
+                        <div sec:authorize="isAuthenticated()"><form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post"><button class="btn btn-primary my-2 my-lg-0" type="submit">Log out</button></form></div>
                     </div>
                 </div>
             </nav>
