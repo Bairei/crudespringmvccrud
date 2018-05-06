@@ -2,6 +2,7 @@ package com.bairei.crudespringmvccrud.configurations;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -38,8 +39,9 @@ public class HibernateConfig {
         return jpaTransactionManager;
     }
 
+
     @Bean
-    LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("hikariDS") DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
@@ -48,7 +50,7 @@ public class HibernateConfig {
         return entityManagerFactoryBean;
     }
 
-    @Bean
+    @Bean("hikariDS")
     DataSource dataSource(Environment env){
         HikariDataSource ds = new HikariDataSource();
         ds.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
@@ -58,7 +60,7 @@ public class HibernateConfig {
         return ds;
     }
 
-    Properties hibernateProperties(){
+    private Properties hibernateProperties(){
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect",
                 env.getRequiredProperty("hibernate.dialect"));

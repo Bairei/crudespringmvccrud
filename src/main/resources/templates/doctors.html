@@ -33,7 +33,7 @@
                                 <td><a th:href="${'/doctor/' + doctor.id}">View</a></td>
                                 <div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')">
                                     <td><a th:href="${'/doctor/edit/' + doctor.id}">Edit</a></td>
-                                    <td><form th:object="${doctor}" th:action="@{/doctor/delete/{id}(id=${doctor.id})}" th:method="delete"><input type="submit" value="Delete" onclick="return confirm('Are you sure?')"></input></form></td>
+                                    <td><form th:object="${doctor}" th:action="@{/doctor/delete/{id}(id=${doctor.id})}" th:method="delete"><input type="submit" value="Delete" onclick="return confirm('Are you sure?')"/></form></td>
                                 </div>
                             </tr>
                         </tbody>

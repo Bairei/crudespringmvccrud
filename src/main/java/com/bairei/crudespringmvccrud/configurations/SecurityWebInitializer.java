@@ -1,6 +1,0 @@
-package com.bairei.crudespringmvccrud.configurations;
-
-import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
-
-public class SecurityWebInitializer extends AbstractSecurityWebApplicationInitializer {
-}

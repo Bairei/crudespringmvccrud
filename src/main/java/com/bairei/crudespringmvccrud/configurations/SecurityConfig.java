@@ -40,8 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutSuccessUrl("/")
                 .and()
-                .exceptionHandling().accessDeniedPage("/403")
-                .and()
                 .authorizeRequests()
                     .antMatchers("/*/new").authenticated()
                     .antMatchers("/*/edit/*").authenticated()
@@ -51,6 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.POST,"/visit").authenticated()
                     .antMatchers(HttpMethod.POST,"/*s").authenticated()
                     .anyRequest().permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403")
                 .and().csrf();
     }
 

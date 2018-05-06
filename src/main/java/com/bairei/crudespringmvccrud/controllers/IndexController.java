@@ -13,4 +13,7 @@ public class IndexController {
 
     @RequestMapping("/403")
     public String forbidden() { return "403";}
+
+    @RequestMapping("/login")
+    public String login() { return "login"; }
 }
