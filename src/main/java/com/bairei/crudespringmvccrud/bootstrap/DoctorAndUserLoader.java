@@ -8,13 +8,14 @@ import com.bairei.crudespringmvccrud.services.UserService;
 import com.bairei.crudespringmvccrud.services.VisitService;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.logging.Logger;
 
 @Component
-public class DoctorAndUserLoader implements SmartInitializingSingleton {
+public class DoctorAndUserLoader implements CommandLineRunner {
 
     private UserService userService;
     private RoleService roleService;
@@ -30,9 +31,9 @@ public class DoctorAndUserLoader implements SmartInitializingSingleton {
 
     private static final Logger log = Logger.getLogger(DoctorAndUserLoader.class.toString());
 
-    @Override
-    public void afterSingletonsInstantiated() {
 
+    @Override
+    public void run(String... args) throws Exception {
         Role userRole = new Role();
         userRole.setName("ROLE_USER");
         roleService.save(userRole);
@@ -91,6 +92,5 @@ public class DoctorAndUserLoader implements SmartInitializingSingleton {
         visit.setDate(new Date());
         visit.setConsultingRoom("1");
         visitService.save(visit);
-
     }
 }

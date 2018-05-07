@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Visit {
@@ -64,5 +65,34 @@ public class Visit {
 
     public void setPatient(User patient) {
         this.patient = patient;
+    }
+
+    @Override
+    public String toString() {
+        return "Visit{" +
+                "id=" + id +
+                ", date=" + date +
+                ", doctor=" + doctor +
+                ", patient=" + patient +
+                ", consultingRoom='" + consultingRoom + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Visit visit = (Visit) o;
+        return Objects.equals(id, visit.id) &&
+                Objects.equals(date, visit.date) &&
+                Objects.equals(doctor, visit.doctor) &&
+                Objects.equals(patient, visit.patient) &&
+                Objects.equals(consultingRoom, visit.consultingRoom);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, date, doctor, patient, consultingRoom);
     }
 }

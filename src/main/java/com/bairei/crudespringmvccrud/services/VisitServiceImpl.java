@@ -74,12 +74,12 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public Visit findOne(Integer id) {
-        return visitRepository.findOne(id);
+        return visitRepository.findById(id).get();
     }
 
     @Override
     public void delete(Integer id) {
-        visitRepository.delete(id);
+        visitRepository.deleteById(id);
     }
 
     @Override

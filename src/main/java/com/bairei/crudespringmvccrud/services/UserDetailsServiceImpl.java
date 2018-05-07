@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-@Service
+@Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final static Logger log = Logger.getLogger(UserDetailsServiceImpl.class.toString());

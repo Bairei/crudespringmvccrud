@@ -1,6 +1,7 @@
 package com.bairei.crudespringmvccrud.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -24,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityConfig(UserDetailsService service, @Lazy BCryptPasswordEncoder passwordEncoder) {
+    public SecurityConfig(@Qualifier("userDetailsService") UserDetailsService service, @Lazy BCryptPasswordEncoder passwordEncoder) {
         this.service = service;
         this.passwordEncoder = passwordEncoder;
     }
